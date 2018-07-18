@@ -25,15 +25,20 @@ type Handler struct {
 func (h *Handler) Handle(ctx context.Context, event sdk.Event) error {
 	switch o := event.Object.(type) {
 	case *v1alpha1.TockerApp:
-		err := sdk.Create(newTockerAppPod(o))
-		if err != nil && !errors.IsAlreadyExists(err) {
-			logrus.Errorf("Failed to create tocker pod : %v", err)
-			return err
-		}
-		err = sdk.Create(newTockerAppService(o))
-		if err != nil && !errors.IsAlreadyExists(err) {
-			logrus.Errorf("Failed to create tocker service: %v", err)
-			return err
+		if event.Deleted {
+			logrus.Infof("event deleted")
+		} else {
+			logrus.Infof("event created/updated")
+			err := sdk.Create(newTockerAppPod(o))
+			if err != nil && !errors.IsAlreadyExists(err) {
+				logrus.Errorf("Failed to create tocker pod : %v", err)
+				return err
+			}
+			err = sdk.Create(newTockerAppService(o))
+			if err != nil && !errors.IsAlreadyExists(err) {
+				logrus.Errorf("Failed to create tocker service: %v", err)
+				return err
+			}
 		}
 	}
 	return nil
