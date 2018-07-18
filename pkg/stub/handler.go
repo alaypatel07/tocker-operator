@@ -94,6 +94,7 @@ func newTockerAppService(cr *v1alpha1.TockerApp) *corev1.Service {
 			Labels: labels,
 		},
 		Spec: corev1.ServiceSpec{
+			Type: "NodePort",
 			Selector: map[string]string{
 				"app": "tocker",
 			},
