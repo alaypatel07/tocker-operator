@@ -4,7 +4,7 @@ metadata:
   name: tocker-operator
 rules:
 - apiGroups:
-  - tocker.alpatel.com
+  - "*"
   resources:
   - "*"
   verbs:
@@ -19,6 +19,7 @@ rules:
   - events
   - configmaps
   - secrets
+  - bundleinstances
   verbs:
   - "*"
 - apiGroups:

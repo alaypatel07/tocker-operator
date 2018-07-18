@@ -6,11 +6,12 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	bundle "github.com/automationbroker/broker-client-go/pkg/apis/automationbroker/v1alpha1"
 )
 
 const (
 	version   = "v1alpha1"
-	groupName = "tocker.alpatel.com"
+	groupName = "automationbroker.io"
 )
 
 var (
@@ -27,8 +28,8 @@ func init() {
 // addKnownTypes adds the set of types defined in this package to the supplied scheme.
 func addKnownTypes(scheme *runtime.Scheme) error {
 	scheme.AddKnownTypes(SchemeGroupVersion,
-		&TockerApp{},
-		&TockerAppList{},
+		&bundle.BundleInstance{},
+		&bundle.BundleInstanceList{},
 	)
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 	return nil

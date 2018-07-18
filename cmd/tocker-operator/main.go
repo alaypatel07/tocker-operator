@@ -4,9 +4,9 @@ import (
 	"context"
 	"runtime"
 
-	stub "github.com/alaypatel07/tocker-operator/pkg/stub"
-	sdk "github.com/operator-framework/operator-sdk/pkg/sdk"
-	k8sutil "github.com/operator-framework/operator-sdk/pkg/util/k8sutil"
+	"github.com/alaypatel07/tocker-operator/pkg/stub"
+	"github.com/operator-framework/operator-sdk/pkg/sdk"
+	"github.com/operator-framework/operator-sdk/pkg/util/k8sutil"
 	sdkVersion "github.com/operator-framework/operator-sdk/version"
 
 	"github.com/sirupsen/logrus"
@@ -23,8 +23,8 @@ func main() {
 
 	sdk.ExposeMetricsPort()
 
-	resource := "tocker.alpatel.com/v1alpha1"
-	kind := "TockerApp"
+	resource := "automationbroker.io/v1alpha1"
+	kind := "BundleInstance"
 	namespace, err := k8sutil.GetWatchNamespace()
 	if err != nil {
 		logrus.Fatalf("Failed to get watch namespace: %v", err)

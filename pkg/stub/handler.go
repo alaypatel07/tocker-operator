@@ -8,11 +8,10 @@ import (
 	"github.com/operator-framework/operator-sdk/pkg/sdk"
 	"github.com/sirupsen/logrus"
 	corev1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/intstr"
-	"github.com/automationbroker/bundle-lib"
+	bundle "github.com/automationbroker/broker-client-go/pkg/apis/automationbroker/v1alpha1"
 )
 
 func NewHandler() sdk.Handler {
@@ -25,21 +24,12 @@ type Handler struct {
 
 func (h *Handler) Handle(ctx context.Context, event sdk.Event) error {
 	switch o := event.Object.(type) {
-	case *v1alpha1.TockerApp:
+	case *bundle.BundleInstance:
 		if event.Deleted {
-			logrus.Infof("event deleted")
+			logrus.Infof("BundleInstance %+v deleted, spec %+v", o.UID, o.Spec.Bundle.Name)
+
 		} else {
-			logrus.Infof("event created/updated")
-			err := sdk.Create(newTockerAppPod(o))
-			if err != nil && !errors.IsAlreadyExists(err) {
-				logrus.Errorf("Failed to create tocker pod : %v", err)
-				return err
-			}
-			err = sdk.Create(newTockerAppService(o))
-			if err != nil && !errors.IsAlreadyExists(err) {
-				logrus.Errorf("Failed to create tocker service: %v", err)
-				return err
-			}
+			logrus.Infof("BundleInstance %+v created/updated, spec %+v", o.UID, o.Spec.Bundle.Name)
 		}
 	}
 	return nil
