@@ -1,0 +1,3 @@
+apiVersion: tocker.alpatel.com/v1alpha1
+kind: TockerApp
+projectName: tocker-operator
