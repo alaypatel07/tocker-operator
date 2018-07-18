@@ -1,4 +1,5 @@
 apiVersion: "tocker.alpatel.com/v1alpha1"
 kind: "TockerApp"
 metadata:
-  name: "example"
+  name: "tocker"
+  namespace: "default"

@@ -36,7 +36,7 @@ func (h *Handler) Handle(ctx context.Context, event sdk.Event) error {
 // newbusyBoxPod demonstrates how to create a busybox pod
 func newbusyBoxPod(cr *v1alpha1.TockerApp) *corev1.Pod {
 	labels := map[string]string{
-		"app": "busy-box",
+		"app": "tocker",
 	}
 	return &corev1.Pod{
 		TypeMeta: metav1.TypeMeta{
@@ -44,7 +44,7 @@ func newbusyBoxPod(cr *v1alpha1.TockerApp) *corev1.Pod {
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "busy-box",
+			Name:      "tocker",
 			Namespace: cr.Namespace,
 			OwnerReferences: []metav1.OwnerReference{
 				*metav1.NewControllerRef(cr, schema.GroupVersionKind{
@@ -58,9 +58,8 @@ func newbusyBoxPod(cr *v1alpha1.TockerApp) *corev1.Pod {
 		Spec: corev1.PodSpec{
 			Containers: []corev1.Container{
 				{
-					Name:    "busybox",
-					Image:   "busybox",
-					Command: []string{"sleep", "3600"},
+					Name:    "tocker",
+					Image:   "alaypatel07/tocker",
 				},
 			},
 		},
